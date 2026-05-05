@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cyber Club Final Mission</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #111827;
+      --accent: #38bdf8;
+      --accent2: #22c55e;
+      --text: #f8fafc;
+      --muted: #cbd5e1;
+      --danger: #f87171;
+      --warning: #facc15;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(135deg, #020617, #0f172a);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    header {
+      text-align: center;
+      padding: 2rem 1rem 1rem;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.2rem;
+      color: var(--accent);
+    }
+
+    header p {
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    main {
+      width: min(950px, 92%);
+      margin: 0 auto 3rem;
+    }
+
+    .card {
+      background: rgba(17, 24, 39, 0.95);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 18px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+    }
+
+    .mission {
+      border-left: 6px solid var(--accent);
+    }
+
+    .challenge h2 {
+      color: var(--accent);
+      margin-top: 0;
+    }
+
+    .email-box, .code-box, .profile-box {
+      background: #020617;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      border-radius: 12px;
+      padding: 1rem;
+      margin: 1rem 0;
+      color: #e5e7eb;
+      line-height: 1.5;
+      overflow-x: auto;
+    }
+
+    .task-list li {
+      margin-bottom: 0.5rem;
+    }
+
+    input[type="text"], input[type="number"], textarea {
+      width: 100%;
+      padding: 0.8rem;
+      margin: 0.5rem 0 1rem;
+      border-radius: 10px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: #020617;
+      color: var(--text);
+      font-size: 1rem;
+    }
+
+    textarea { min-height: 90px; }
+
+    button {
+      background: var(--accent);
+      color: #00111f;
+      border: none;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-right: 0.5rem;
+      margin-top: 0.25rem;
+    }
+
+    button:hover { filter: brightness(1.1); }
+
+    button.secondary {
+      background: #334155;
+      color: var(--text);
+    }
+
+    .feedback {
+      font-weight: bold;
+      margin-top: 0.75rem;
+      min-height: 1.2rem;
+    }
+
+    .good { color: var(--accent2); }
+    .bad { color: var(--danger); }
+    .hint { color: var(--warning); }
+
+    .progress {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.5rem;
+      margin: 1rem 0;
+    }
+
+    .progress div {
+      text-align: center;
+      padding: 0.7rem;
+      border-radius: 10px;
+      background: #1e293b;
+      color: var(--muted);
+      font-weight: bold;
+    }
+
+    .progress .done {
+      background: rgba(34, 197, 94, 0.2);
+      color: var(--accent2);
+      border: 1px solid var(--accent2);
+    }
+
+    .hidden-image {
+      height: 170px;
+      border-radius: 12px;
+      background: #111827;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 1rem 0;
+      position: relative;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      overflow: hidden;
+    }
+
+    .hidden-image::before {
+      content: "SAFE";
+      color: #182235;
+      font-size: 4rem;
+      font-weight: bold;
+      letter-spacing: 0.5rem;
+    }
+
+    .hidden-image span {
+      position: absolute;
+      bottom: 0.75rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .final-code {
+      font-size: 1.4rem;
+      letter-spacing: 0.1rem;
+      background: #020617;
+      padding: 1rem;
+      border-radius: 12px;
+      margin: 1rem 0;
+      color: var(--accent);
+      text-align: center;
+      border: 1px dashed var(--accent);
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 2rem 1rem;
+      font-size: 0.9rem;
+    }
+
+    .small {
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🔐 Cyber Club Final Mission</h1>
+    <p>Digital Detective: Incident Response Challenge</p>
+  </header>
+
+  <main>
+    <section class="card mission">
+      <h2>Mission Brief</h2>
+      <p>A system has been compromised, and your team has been called in to investigate. Complete each challenge to collect a piece of the final unlock code.</p>
+      <p><strong>Work together. Explain your thinking. No hacking — just investigation.</strong></p>
+      <div class="progress" id="progress">
+        <div id="p1">1</div>
+        <div id="p2">2</div>
+        <div id="p3">3</div>
+        <div id="p4">4</div>
+        <div id="p5">5</div>
+      </div>
+    </section>
+
+    <section class="card challenge">
+      <h2>Challenge 1: Phishing Investigation</h2>
+      <p>Read the email below and identify phishing clues.</p>
+      <div class="email-box">
+        <strong>From:</strong> support@paypaI.com<br />
+        <strong>Subject:</strong> URGENT: Account Suspension Notice<br /><br />
+        Dear Customer,<br /><br />
+        We detected suspicious activity. Your account will be permanently locked in 24 hours unless you verify immediately.<br /><br />
+        Click here: http://paypal-secure-login.co/verify<br /><br />
+        Failure to act will result in account termination.<br /><br />
+        Thank you,<br />
+        PayPal Security Team
+      </div>
+      <ul class="task-list">
+        <li>Find at least 4 phishing clues.</li>
+        <li>Explain why the message is suspicious.</li>
+      </ul>
+      <textarea id="phishAnswer" placeholder="Type your phishing clues here..."></textarea>
+      <button onclick="checkPhish()">Submit Challenge 1</button>
+      <button class="secondary" onclick="showHint('hint1')">Hint</button>
+      <p id="hint1" class="feedback hint"></p>
+      <p id="fb1" class="feedback"></p>
+    </section>
+
+    <section class="card challenge">
+      <h2>Challenge 2: Cipher Decode</h2>
+      <p>These are Caesar ciphers. Each letter was shifted forward by 3. Decode both messages by shifting letters back by 3.</p>
+      <div class="code-box">
+        Wklqn Ehiruh Brx Folfn<br />
+        Fdhvdu Flskhuv duh ixq
+      </div>
+      <label>Decoded Message 1:</label>
+      <input id="cipher1" type="text" placeholder="Message 1" />
+      <label>Decoded Message 2:</label>
+      <input id="cipher2" type="text" placeholder="Message 2" />
+      <button onclick="checkCipher()">Submit Challenge 2</button>
+      <button class="secondary" onclick="showHint('hint2')">Hint</button>
+      <p id="hint2" class="feedback hint"></p>
+      <p id="fb2" class="feedback"></p>
+    </section>
+
+    <section class="card challenge">
+      <h2>Challenge 3: Password Security</h2>
+      <p>Which password is the strongest?</p>
+      <div class="code-box">
+        A. password123<br />
+        B. P@ssw0rd!<br />
+        C. BlueTacoRiverDance!<br />
+        D. ilovecats
+      </div>
+      <label>Choose A, B, C, or D:</label>
+      <input id="passwordChoice" type="text" placeholder="Enter your choice" />
+      <label>Explain why:</label>
+      <textarea id="passwordWhy" placeholder="Why is this one strongest?"></textarea>
+      <button onclick="checkPassword()">Submit Challenge 3</button>
+      <button class="secondary" onclick="showHint('hint3')">Hint</button>
+      <p id="hint3" class="feedback hint"></p>
+      <p id="fb3" class="feedback"></p>
+    </section>
+
+    <section class="card challenge">
+      <h2>Challenge 4: Hidden Message</h2>
+      <p>Look closely at the image. The hidden word is faint. You may need to zoom in or adjust your screen angle.</p>
+      <div class="hidden-image"><span>Hidden message image</span></div>
+      <label>Hidden word:</label>
+      <input id="hiddenWord" type="text" placeholder="Enter the hidden word" />
+      <button onclick="checkHidden()">Submit Challenge 4</button>
+      <button class="secondary" onclick="showHint('hint4')">Hint</button>
+      <p id="hint4" class="feedback hint"></p>
+      <p id="fb4" class="feedback"></p>
+    </section>
+
+    <section class="card challenge">
+      <h2>Challenge 5: OSINT Mini Investigation</h2>
+      <p>Use the clues in the profile to determine the most likely city.</p>
+      <div class="profile-box">
+        <strong>Username:</strong> SurfRider23<br />
+        <strong>Bio:</strong> “Nothing beats early mornings by Diamond Head 🌊🏄‍♂️”<br />
+        <strong>Caption:</strong> “Caught the sunrise before the crowds!”
+      </div>
+      <ul class="task-list">
+        <li>What landmark is mentioned?</li>
+        <li>What state is this in?</li>
+        <li>What city is most likely?</li>
+      </ul>
+      <label>City:</label>
+      <input id="cityAnswer" type="text" placeholder="Enter the city" />
+      <button onclick="checkOSINT()">Submit Challenge 5</button>
+      <button class="secondary" onclick="showHint('hint5')">Hint</button>
+      <p id="hint5" class="feedback hint"></p>
+      <p id="fb5" class="feedback"></p>
+    </section>
+
+    <section class="card challenge">
+      <h2>Final Unlock Code</h2>
+      <p>When all five challenges are complete, enter the final code.</p>
+      <p class="small">Format example: 1-2-3-4-5</p>
+      <div class="final-code" id="codeDisplay">Collected Code Pieces: _ - _ - _ - _ - _</div>
+      <input id="finalCode" type="text" placeholder="Enter final code" />
+      <button onclick="checkFinal()">Unlock System</button>
+      <p id="fbFinal" class="feedback"></p>
+    </section>
+  </main>
+
+  <footer>
+    Cyber Club Final Mission | Collaborative Digital Detective Challenge
+  </footer>
+
+  <script>
+    const pieces = [null, null, null, null, null];
+
+    function normalize(text) {
+      return text.toLowerCase().replace(/[^a-z0-9]/g, "");
+    }
+
+    function updateProgress() {
+      pieces.forEach((piece, index) => {
+        const box = document.getElementById(`p${index + 1}`);
+        if (piece !== null) {
+          box.classList.add("done");
+          box.textContent = piece;
+        }
+      });
+      document.getElementById("codeDisplay").textContent =
+        "Collected Code Pieces: " + pieces.map(p => p === null ? "_" : p).join(" - ");
+    }
+
+    function setFeedback(id, message, good = true) {
+      const el = document.getElementById(id);
+      el.textContent = message;
+      el.className = "feedback " + (good ? "good" : "bad");
+    }
+
+    function showHint(id) {
+      const hints = {
+        hint1: "Look carefully at the sender, the link, the urgent language, and the greeting.",
+        hint2: "Try shifting each letter backward by 3. W becomes T, k becomes h, l becomes i.",
+        hint3: "Length matters. A longer passphrase is usually harder to guess than a short password with symbols.",
+        hint4: "The word is very faint and appears in the center of the image.",
+        hint5: "Diamond Head is a famous landmark in Hawaii. What city is it near?"
+      };
+      document.getElementById(id).textContent = hints[id];
+    }
+
+    function checkPhish() {
+      const answer = normalize(document.getElementById("phishAnswer").value);
+      const keywords = ["urgent", "locked", "link", "paypal", "paypai", "domain", "customer", "generic", "http", "suspicious", "verify", "threat"];
+      let count = 0;
+      keywords.forEach(k => { if (answer.includes(k)) count++; });
+      if (count >= 4) {
+        pieces[0] = 4;
+        updateProgress();
+        setFeedback("fb1", "Correct! You found enough phishing clues. Code piece #1 is 4.");
+      } else {
+        setFeedback("fb1", "Keep looking. Try to identify at least 4 specific phishing clues.", false);
+      }
+    }
+
+    function checkCipher() {
+      const one = normalize(document.getElementById("cipher1").value);
+      const two = normalize(document.getElementById("cipher2").value);
+      if (one.includes("thinkbeforeyouclick") && two.includes("caesarciphersarefun")) {
+        pieces[1] = 8;
+        updateProgress();
+        setFeedback("fb2", "Correct! The two messages have 8 total words. Code piece #2 is 8.");
+      } else {
+        setFeedback("fb2", "Not quite. Remember to shift each letter backward by 3.", false);
+      }
+    }
+
+    function checkPassword() {
+      const choice = normalize(document.getElementById("passwordChoice").value);
+      const why = normalize(document.getElementById("passwordWhy").value);
+      if (choice === "c" && (why.includes("long") || why.includes("passphrase") || why.includes("random") || why.includes("words"))) {
+        pieces[2] = 21;
+        updateProgress();
+        setFeedback("fb3", "Correct! BlueTacoRiverDance! is strongest because it is long and memorable. Code piece #3 is 21.");
+      } else if (choice === "c") {
+        setFeedback("fb3", "C is correct. Add why it is strongest: think length or passphrase.", false);
+      } else {
+        setFeedback("fb3", "Not quite. Think about which option is longest and hardest to guess.", false);
+      }
+    }
+
+    function checkHidden() {
+      const word = normalize(document.getElementById("hiddenWord").value);
+      if (word === "safe") {
+        pieces[3] = 4;
+        updateProgress();
+        setFeedback("fb4", "Correct! The hidden word is SAFE. Code piece #4 is 4.");
+      } else {
+        setFeedback("fb4", "Not quite. Look carefully in the center of the image.", false);
+      }
+    }
+
+    function checkOSINT() {
+      const city = normalize(document.getElementById("cityAnswer").value);
+      if (city === "honolulu") {
+        pieces[4] = 8;
+        updateProgress();
+        setFeedback("fb5", "Correct! Diamond Head is near Honolulu. Code piece #5 is 8.");
+      } else {
+        setFeedback("fb5", "Not quite. Search the landmark Diamond Head and identify the nearby city.", false);
+      }
+    }
+
+    function checkFinal() {
+      const code = document.getElementById("finalCode").value.trim().replace(/\s/g, "");
+      if (code === "4-8-21-4-8" || code === "482148") {
+        setFeedback("fbFinal", "🎉 System unlocked! Mission complete. You are officially Cyber Detectives!");
+      } else {
+        setFeedback("fbFinal", "Code incorrect. Make sure all five challenge pieces are in order.", false);
+      }
+    }
+  </script>
+</body>
+</html>
